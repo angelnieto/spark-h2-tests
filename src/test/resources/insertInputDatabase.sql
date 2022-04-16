@@ -1,3 +1,3 @@
-insert into student values (1, 'Konrad', 'Cala');
-insert into student values (2, 'John', 'Doe');
-insert into student values (null, 'Ricardo', 'Molina');
+insert into student values (1, 'Georgia', 'Thomas');
+insert into student values (2, 'Billy', 'Thomas');
+insert into student values (null, 'Richard', 'Fish');

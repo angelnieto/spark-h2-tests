@@ -1,7 +1,7 @@
-package com.konrad.spark_h2_tests
+package es.ricardo
 
-import com.konrad.spark_h2_tests.database.{DatabaseConnectionSettings, Repository}
-import com.konrad.spark_h2_tests.model.{Person, Student}
+import es.ricardo.database.{DatabaseConnectionSettings, Repository}
+import es.ricardo.model.{Person, Student}
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.spark.sql.{Dataset, SparkSession}
 
@@ -9,7 +9,7 @@ import org.apache.spark.sql.{Dataset, SparkSession}
 class App(implicit spark: SparkSession) extends LazyLogging {
   def ingest(inputDb: DatabaseConnectionSettings, outputDb: DatabaseConnectionSettings) = {
     import spark.implicits._
-    val students: Dataset[Student] = Repository.readTable(inputDb, "(select first_name as firstName, last_name as lastName from student) students").as[Student]
+    val students: Dataset[Student] = Repository.readTable(inputDb, "(select id, first_name as firstName, last_name as lastName from student) students").as[Student]
     val persons: Dataset[Person] = students.map(student => Person(student.firstName + " " + student.lastName))
     println("persons")
     persons.show()

@@ -1,8 +1,6 @@
-package com.konrad.spark_h2_tests.util
+package es.ricardo.database
 
 import java.nio.charset.StandardCharsets
-
-import com.konrad.spark_h2_tests.database.DatabaseConnectionSettings
 import com.typesafe.scalalogging.LazyLogging
 import org.h2.tools.RunScript
 
@@ -16,6 +14,7 @@ object H2DatabaseCreator extends LazyLogging {
   def createTables(): Unit = {
     logger.info("Creating tables in test databases")
     RunScript.execute(inputH2Url, "sa", "", "classpath:createInputDatabase.sql", StandardCharsets.UTF_8, false)
+    RunScript.execute(inputH2Url, "sa", "", "classpath:insertInputDatabase.sql", StandardCharsets.UTF_8, false)
     RunScript.execute(outputH2Url, "sa", "", "classpath:createOutputDatabase.sql", StandardCharsets.UTF_8, false)
     logger.info("Create scripts run successfully")
   }

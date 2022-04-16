@@ -1,1 +1,2 @@
-create table person (name nvarchar(256));
+create table person (id int PRIMARY KEY NOT NULL IDENTITY(1,1), name nvarchar(256));
+create table student (id int PRIMARY KEY NOT NULL IDENTITY(1,1), first_name nvarchar(128), last_name nvarchar(128));

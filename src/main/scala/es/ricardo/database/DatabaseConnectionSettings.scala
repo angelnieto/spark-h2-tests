@@ -1,4 +1,4 @@
-package com.konrad.spark_h2_tests.database
+package es.ricardo.database
 
 case class DatabaseConnectionSettings(connectionString: String,
                                       username: String,

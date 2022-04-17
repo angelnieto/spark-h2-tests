@@ -9,12 +9,12 @@ import org.apache.spark.sql.types._
 
 class H2RowModifier {
     
-    def saveOrUpdate(inputDb: DatabaseConnectionSettings, outputDb: DatabaseConnectionSettings, row: RowModification)(implicit spark: SparkSession) = {
+    def saveOrUpdate(outputDb: DatabaseConnectionSettings, row: RowModification)(implicit spark: SparkSession) = {
       import spark.implicits._
       
       row.operation.toUpperCase() match {
           case "UPDATE" => {
-              val results: DataFrame = Repository.readTable(inputDb, row.table)
+              val results: DataFrame = Repository.readTable(outputDb, row.table).cache()
               var resultsFiltered: DataFrame = results
               row.wFields.get.map {case (key, value) =>  resultsFiltered = resultsFiltered.filter(col(key).===(value))}
                
@@ -31,10 +31,10 @@ class H2RowModifier {
               println("students tras UPDATE")
               resultsToPersist.show()
               
-              Repository.save(resultsToPersist, outputDb, row.table)
+              Repository.update(resultsToPersist, outputDb, row.table)
           }
           case "INSERT" => {
-            val results: DataFrame = Repository.readTable(inputDb, row.table)
+            val results: DataFrame = Repository.readTable(outputDb, row.table).cache()
 
             var dataTypes: Array[StructField] = Array()
             var values: Array[Any] = Array()
@@ -44,7 +44,7 @@ class H2RowModifier {
                   values = values :+ value
             })}
            
-            val rowToAdd = spark.sqlContext.createDataFrame(spark.sparkContext.parallelize(List(Row.fromSeq(values))), StructType(dataTypes.toList)).cache()
+            val rowToAdd = spark.sqlContext.createDataFrame(spark.sparkContext.parallelize(List(Row.fromSeq(values))), StructType(dataTypes.toList))
              
             println("rowToAdd")
             rowToAdd.show()

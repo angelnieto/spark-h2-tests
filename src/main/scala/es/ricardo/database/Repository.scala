@@ -46,6 +46,17 @@ object Repository extends LazyLogging{
     println(s"Data saved successfully into table $tableName")
   }
   
+  def update(frame: DataFrame, sqlOutputDatabase: DatabaseConnectionSettings, tableName: String) = {
+    println(s"Updating data into table $tableName")
+    val connectionProperties: Properties = createJdbcProperties(sqlOutputDatabase)
+    frame
+      .write
+      .mode(SaveMode.Overwrite)
+      .jdbc(sqlOutputDatabase.connectionString, tableName, connectionProperties)
+      
+    println(s"Data updated successfully into table $tableName")
+  }
+  
   def createJdbcProperties(outputDatabase: DatabaseConnectionSettings) = {
     if(connectionProperties.isEmpty()){
       connectionProperties.put("username", outputDatabase.username)

@@ -19,7 +19,7 @@ class StepDefinitions extends ScalaDsl with EN {
   implicit val spark = SparkSession.builder.appName("test").master("local").getOrCreate
   import spark.implicits._
   
-  Given("""an {string} operation in table {string} we set the value {string} in the field {string} for the student with field {string} with value {int}""") { 
+  And("""an {string} operation in table {string} we set the value {string} in the field {string} for the student with field {string} with value {int}""") { 
     (operation: String, table: String, value1: String, field1: String, wField: String, wValue: Int) =>
      var fields = Map[String, Any]() 
      fields += (field1 -> value1)
@@ -27,18 +27,17 @@ class StepDefinitions extends ScalaDsl with EN {
      wFields += (wField -> wValue)
      
      val rowModification: RowModification = RowModification(operation, table, fields, Some(wFields))
-     new H2RowModifier().saveOrUpdate(H2DatabaseCreator.inputDbConf, H2DatabaseCreator.outputDbConf, rowModification)
+     new H2RowModifier().saveOrUpdate(H2DatabaseCreator.outputDbConf, rowModification)
   }
   
-  And("""an {string} operation in table {string} to insert a new student with the value {string} in the field {string} and the value {string} in the field {string}""") { 
+  Given("""an {string} operation in table {string} to insert a new student with the value {string} in the field {string} and the value {string} in the field {string}""") { 
     (operation: String, table: String, value1: String, field1: String, value2: String, field2: String) =>
-    println("And")
      var fields = Map[String, Any]() 
      fields += (field1 -> value1)
      fields += (field2 -> value2)
      
      val rowModification: RowModification = RowModification(operation, table, fields, None)
-     new H2RowModifier().saveOrUpdate(H2DatabaseCreator.inputDbConf, H2DatabaseCreator.outputDbConf, rowModification)
+     new H2RowModifier().saveOrUpdate(H2DatabaseCreator.outputDbConf, rowModification)
      
   }
   

@@ -9,18 +9,11 @@
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<!--         <scala.version>2.12.10</scala.version> -->
         <scala.version>2.11.12</scala.version>
-
-<!--         <scala.compat.version>2.12</scala.compat.version> -->
-<!--         <spark.version>2.4.4</spark.version> -->
-        	<scala.compat.version>2.11</scala.compat.version>
-  		    <spark.version>2.3.2</spark.version>
-  		
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <scala.compat.version>2.11</scala.compat.version>
+  		<spark.version>2.3.2</spark.version>
+  		<maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        
-        
         <spark-testing-base.version>2.4.5_0.14.0</spark-testing-base.version>
         <mockito-core.version>3.1.0</mockito-core.version>
         <lambda-core.version>2.0.5</lambda-core.version>
@@ -77,7 +70,6 @@
         <dependency>
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_${scala.compat.version}</artifactId>
-<!--             <version>3.1.0</version> -->
             <version>3.0.5</version>
             <scope>test</scope>
         </dependency>

@@ -1,6 +1,5 @@
 package es.ricardo.database
 
-import es.ricardo.database.{DatabaseConnectionSettings, Repository}
 import org.apache.spark.sql.{Dataset, SparkSession}
 import es.ricardo.model.{Person, Student, RowModification}
 import org.apache.spark.sql.{DataFrame, Row}

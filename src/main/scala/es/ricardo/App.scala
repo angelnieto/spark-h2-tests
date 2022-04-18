@@ -3,8 +3,8 @@ package es.ricardo
 import es.ricardo.database.{DatabaseConnectionSettings, Repository}
 import es.ricardo.model.{Person, Student}
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.spark.sql.{Dataset, SparkSession}
-
+import org.apache.spark.sql.{Dataset, SparkSession, DataFrame}
+import es.ricardo.database.Repository
 
 class App(implicit spark: SparkSession) extends LazyLogging {
   def ingest(inputDb: DatabaseConnectionSettings, outputDb: DatabaseConnectionSettings) = {
@@ -14,6 +14,10 @@ class App(implicit spark: SparkSession) extends LazyLogging {
     println("persons")
     persons.show()
     Repository.save(persons.toDF(), outputDb, "person")
+  }
+  
+  def readTable(tableName: String): DataFrame = {
+    Repository.readTable(tableName)
   }
 }
 

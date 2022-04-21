@@ -46,11 +46,16 @@ object Repository extends LazyLogging{
     println(s"Data saved successfully into table $tableName")
   }
   
-  def update(frame: DataFrame, sqlOutputDatabase: DatabaseConnectionSettings, tableName: String) = {
+  def update(frame: DataFrame, sqlOutputDatabase: DatabaseConnectionSettings, tableName: String)(implicit spark: SparkSession) = {
     println(s"Updating data into table $tableName")
     val connectionProperties: Properties = createJdbcProperties(sqlOutputDatabase)
+    // Debemos crear una tabla temporal porque spark no permite leer y escribir en la misma tabla
     frame
       .write
+      .mode(SaveMode.Overwrite)
+      .saveAsTable("temp_table")
+    
+    spark.sqlContext.table("temp_table").write
       .mode(SaveMode.Overwrite)
       .jdbc(sqlOutputDatabase.connectionString, tableName, connectionProperties)
       

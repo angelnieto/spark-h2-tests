@@ -18,17 +18,11 @@ class H2RowModifier {
               row.wFields.get.map {case (key, value) =>  resultsFiltered = resultsFiltered.filter(col(key).===(value))}
                
               var resultsToPersist = results.except(resultsFiltered)
-              
-              println("students tras SELECT")
-              results.show()
-              
+
               var resultsUpdated: DataFrame = resultsFiltered
               row.fields map {case (key, value) => ( resultsUpdated = resultsUpdated.withColumn(key.toUpperCase(), when(col(key).notEqual(value), value)) )}
-                               
+               
               resultsToPersist = resultsToPersist.union(resultsUpdated)
-              
-              println("students tras UPDATE")
-              resultsToPersist.show()
               
               Repository.update(resultsToPersist, outputDb, row.table)
           }
@@ -44,9 +38,6 @@ class H2RowModifier {
             })}
            
             val rowToAdd = spark.sqlContext.createDataFrame(spark.sparkContext.parallelize(List(Row.fromSeq(values))), StructType(dataTypes.toList))
-             
-            println("rowToAdd")
-            rowToAdd.show()
            
             Repository.save(rowToAdd, outputDb, row.table)  
           }  

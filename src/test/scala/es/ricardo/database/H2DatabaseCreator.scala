@@ -13,14 +13,14 @@ object H2DatabaseCreator extends LazyLogging {
 
   def createTables(): Unit = {
     logger.info("Creating tables in test databases")
-    RunScript.execute(outputH2Url, "sa", "", "classpath:createOutputDatabase.sql", StandardCharsets.UTF_8, false)
-     RunScript.execute(outputH2Url, "sa", "", "classpath:insertOutputDatabase.sql", StandardCharsets.UTF_8, false)
+    RunScript.execute(outputH2Url, "sa", "", "classpath:createDatabase.sql", StandardCharsets.UTF_8, false)
+     RunScript.execute(outputH2Url, "sa", "", "classpath:insertDatabase.sql", StandardCharsets.UTF_8, false)
     logger.info("Create scripts run successfully")
   }
 
   def dropTables(): Unit = {
     logger.info("Dropping all tables from test databases")
-    RunScript.execute(outputH2Url, "sa", "", "classpath:dropOutputTables.sql", StandardCharsets.UTF_8, false)
+    RunScript.execute(outputH2Url, "sa", "", "classpath:dropTables.sql", StandardCharsets.UTF_8, false)
     logger.info("Tables dropped")
   }
 }

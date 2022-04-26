@@ -1,7 +1,7 @@
 package es.ricardo.database
 
 import org.apache.spark.sql.{Dataset, SparkSession}
-import es.ricardo.model.{Person, Student, RowModification}
+import es.ricardo.model.RowModification
 import org.apache.spark.sql.{DataFrame, Row}
 import org.apache.spark.sql.functions.{when, col, lit}
 import org.apache.spark.sql.types._

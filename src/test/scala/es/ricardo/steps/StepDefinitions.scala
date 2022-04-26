@@ -8,7 +8,6 @@ import es.ricardo.database.{H2RowModifier, H2DatabaseCreator}
 import es.ricardo.model.RowModification
 import es.ricardo.App
 
-import es.ricardo.model.{Person, Student}
 import org.junit.Assert
 import scala.collection.mutable.Map
 import es.ricardo.database.H2RowModifier

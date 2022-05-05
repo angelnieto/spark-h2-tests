@@ -7,6 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>spark-h2-tests</name>
     <url>http://maven.apache.org</url>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <scala.version>2.11.12</scala.version>
@@ -59,11 +60,6 @@
             <groupId>com.typesafe.scala-logging</groupId>
             <artifactId>scala-logging_${scala.compat.version}</artifactId>
             <version>3.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <version>7.4.1.jre11</version>
         </dependency>
 
         <!--TEST-->
@@ -120,6 +116,30 @@
         
     </dependencies>
 
+    <profiles>
+    	<profile>
+    		<id>default</id>
+    		<activation>
+    			<activeByDefault>true</activeByDefault>
+    		</activation>
+    		<properties>
+    			<cucumber.filter.tags>@regression</cucumber.filter.tags>
+    		</properties>
+    	</profile>
+    	<profile>
+    		<id>stry000001</id>
+    		<properties>
+    			<cucumber.filter.tags>@stry000001 or @regression</cucumber.filter.tags>
+    		</properties>
+    	</profile>
+    	<profile>
+    		<id>stry000002</id>
+    		<properties>
+    			<cucumber.filter.tags>@stry000002 or @regression</cucumber.filter.tags>
+    		</properties>
+    	</profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
@@ -155,6 +175,16 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M4</version>
+                <configuration>
+                    <systemPropertyVariables>
+                       <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
         </plugins>
     </build>

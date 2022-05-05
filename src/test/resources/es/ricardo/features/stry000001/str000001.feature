@@ -1,4 +1,4 @@
-@feature_lawyers1
+@stry000001
 Feature: Lawyer Update
 Description: The purpose of this feature is to test the insertion of table values
  
